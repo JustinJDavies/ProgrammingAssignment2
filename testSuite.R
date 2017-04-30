@@ -51,3 +51,11 @@ testCacheMatrix2$getinv()
 
 testCacheMatrix2$set(testMatrix)
 testCacheMatrix2$getinv()
+
+# Don't allow non-matrix objects, for example (not exhaustive...) :
+expect_silent(testCacheMatrix <- makeCacheMatrix(matrix()))
+expect_warning(testCacheMatrix <- makeCacheMatrix(data.frame()), regexp = "Must pass an object of class matrix")
+expect_warning(testCacheMatrix <- makeCacheMatrix(vector()), regexp = "Must pass an object of class matrix")
+expect_warning(testCacheMatrix <- makeCacheMatrix(list()), regexp = "Must pass an object of class matrix")
+expect_warning(testCacheMatrix <- makeCacheMatrix(factor()), regexp = "Must pass an object of class matrix")
+

@@ -7,9 +7,16 @@
 
 ## This function creates a special "matrix" object that can cache its inverse.
 makeCacheMatrix <- function(x = matrix()) {
-    # Assume that the matrix supplied is always invertible
     
     inv <- NULL    
+    
+    # Assume that the matrix supplied is always invertible
+    # Let's test that the object passed to this constructor is actually a matrix
+    if (!(class(x) == class(matrix())))
+    {
+        warning("Must pass an object of class matrix")
+        return(NULL)
+    }
     
     # set the value of the matrix
     set <- function(y) {

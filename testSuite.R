@@ -1,7 +1,7 @@
 source("cachematrix.R")
 
 # install.packages("testthat")
-library(testthat) 
+library(testthat)
 
 # Unit Tests
 testMatrix <- matrix(data = 1:4, nrow = 2)
@@ -23,7 +23,7 @@ expect_equal(actual, expected)
 expect_equal(testInverse, cacheSolve(testCacheMatrix))
 
 # if we change the matrix to a non-identical one...
-expect_false(isTRUE(all.equal(testMatrix,testMatrix2)))
+expect_false(isTRUE(all.equal(testMatrix, testMatrix2)))
 testCacheMatrix$set(y = testMatrix2)
 
 actual <- cacheSolve(testCacheMatrix)
@@ -41,7 +41,7 @@ expect_equal(actual, expected)
 
 # Test message
 testCacheMatrix2 <- makeCacheMatrix(testMatrix)
-# Should not produce a message on set as inverse is not yet calculated : 
+# Should not produce a message on set as inverse is not yet calculated :
 testCacheMatrix2$set(testMatrix)
 testCacheMatrix2$getinv()
 
@@ -54,8 +54,11 @@ testCacheMatrix2$getinv()
 
 # Don't allow non-matrix objects, for example (not exhaustive...) :
 expect_silent(testCacheMatrix <- makeCacheMatrix(matrix()))
-expect_warning(testCacheMatrix <- makeCacheMatrix(data.frame()), regexp = "Must pass an object of class matrix")
-expect_warning(testCacheMatrix <- makeCacheMatrix(vector()), regexp = "Must pass an object of class matrix")
-expect_warning(testCacheMatrix <- makeCacheMatrix(list()), regexp = "Must pass an object of class matrix")
-expect_warning(testCacheMatrix <- makeCacheMatrix(factor()), regexp = "Must pass an object of class matrix")
-
+expect_warning(testCacheMatrix <-
+                   makeCacheMatrix(data.frame()), regexp = "Must pass an object of class matrix")
+expect_warning(testCacheMatrix <-
+                   makeCacheMatrix(vector()), regexp = "Must pass an object of class matrix")
+expect_warning(testCacheMatrix <-
+                   makeCacheMatrix(list()), regexp = "Must pass an object of class matrix")
+expect_warning(testCacheMatrix <-
+                   makeCacheMatrix(factor()), regexp = "Must pass an object of class matrix")

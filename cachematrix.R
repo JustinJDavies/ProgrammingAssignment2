@@ -7,8 +7,7 @@
 
 ## This function creates a special "matrix" object that can cache its inverse.
 makeCacheMatrix <- function(x = matrix()) {
-    
-    inv <- NULL    
+    inv <- NULL
     
     # Assume that the matrix supplied is always invertible
     # Let's test that the object passed to this constructor is actually a matrix
@@ -21,7 +20,8 @@ makeCacheMatrix <- function(x = matrix()) {
     # set the value of the matrix
     set <- function(y) {
         # Test if matrices are the same, from https://stat.ethz.ch/pipermail/r-help/2012-June/315408.html
-        if (!(is.matrix(x) && is.matrix(y) && dim(x) == dim(y) && all(x == y)))
+        if (!(is.matrix(x) &&
+              is.matrix(y) && dim(x) == dim(y) && all(x == y)))
         {
             if (is.null(inv))
             {
@@ -32,30 +32,36 @@ makeCacheMatrix <- function(x = matrix()) {
         {
             message("keeping inverse as matrix appears to be the same as before")
             # effectively performing this assignment
-            # inv <<- inv 
+            # inv <<- inv
         }
         # Update the matrix assignment
         x <<- y
     }
     
     # get the value of the matrix
-    get <- function() x
+    get <- function()
+        x
     
-    # set the value of the inverse (not actually sure I want this method publically 
+    # set the value of the inverse (not actually sure I want this method publically
     # exposed, but following the example.. hey ho)
-    setinv <- function(solve) inv <<- solve
+    setinv <- function(solve)
+        inv <<- solve
     
     # get the value of the inverse
-    getinv <- function() inv
+    getinv <- function()
+        inv
     
     #return value
-    list(set = set, get = get,
-         setinv = setinv,
-         getinv = getinv)
+    list(
+        set = set,
+        get = get,
+        setinv = setinv,
+        getinv = getinv
+    )
 }
 
 ## This function computes the inverse of the special "matrix" returned by makeCacheMatrix above.
-## If the inverse has already been calculated (and the matrix has not changed), then cacheSolve 
+## If the inverse has already been calculated (and the matrix has not changed), then cacheSolve
 ## should retrieve the inverse from the cache.
 cacheSolve <- function(x, ...) {
     # Returns the inverse of x
@@ -64,7 +70,7 @@ cacheSolve <- function(x, ...) {
     inv <- x$getinv()
     
     # check if value of inverse is cached ...
-    if(!is.null(inv)) {
+    if (!is.null(inv)) {
         message("getting cached value")
         return(inv)
     }
@@ -77,4 +83,3 @@ cacheSolve <- function(x, ...) {
     # Return the freshly calcualted inverse
     return(inv)
 }
-

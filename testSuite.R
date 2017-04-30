@@ -62,3 +62,32 @@ expect_warning(testCacheMatrix <-
                    makeCacheMatrix(list()), regexp = "Must pass an object of class matrix")
 expect_warning(testCacheMatrix <-
                    makeCacheMatrix(factor()), regexp = "Must pass an object of class matrix")
+
+
+
+# Test we can create two cacheMatrix objects and the second doesn't intefere with the first
+
+tm1 <- makeCacheMatrix(testMatrix)
+tm2 <- makeCacheMatrix(testMatrix2)
+
+
+expect_silent(actual <- cacheSolve(tm1))
+expected <- testInverse
+expect_equal(actual, expected)
+
+expect_silent(actual <- cacheSolve(tm2))
+expected <- testInverse2
+expect_equal(actual, expected)
+
+# Should pass AND also send message "getting cached value"
+# How do I test two things?
+expect_message(actual <- cacheSolve(tm1), regexp = "getting cached value")
+expected <- testInverse
+expect_equal(actual, expected)
+
+
+
+
+
+
+
